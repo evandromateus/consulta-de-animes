@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="style.css">
+  <script src="script.js" defer></script>
+  <script src="theme.js" defer></script>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css">
+  <title>Anime API</title>
+</head>
+<body>
+
+  <div class="toggle-container">
+    <input id="toggle" type="checkbox" name="toggle"><label id="label-toggle" for="toggle"><i class="bi bi-moon-stars"></i></label>
+  </div>
+
+  <header>
+    <form id="search-form">
+      <input id="search" class="search" type="search" placeholder="Procure por um anime" autocomplete="off">
+    </form>
+    <ul class="menu">
+      <li>Favoritos</li>
+      <li>Ver depois</li>
+      <li>Assistindo</li>
+      <li>Assistido</li>
+    </ul>
+  </header>
+  
+  <div id="animes" class="animes"></div>
+
+  <div id="anime-container" class="anime-container"></div>
+</body>
+</html>
