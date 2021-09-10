@@ -55,6 +55,11 @@ header{
 .menu li{
   margin-right: 1.5rem;
   list-style: none;
+  cursor: pointer;
+}
+
+.menu li:hover{
+  text-decoration: underline;
 }
 
 .search{
@@ -235,4 +240,5 @@ header{
 .tool i{
   margin-bottom: 0.3rem;
   font-size: 2.5rem;
+  cursor: pointer;
 }
