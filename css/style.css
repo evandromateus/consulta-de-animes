@@ -8,6 +8,10 @@
   box-sizing: border-box;
 }
 
+html {
+  scroll-behavior: smooth;
+}
+
 body{
   margin: 0;
   font-family: 'Poppins', sans-serif;
@@ -41,25 +45,33 @@ label{
 }
 
 header{
-  width: 1200px;
+  max-width: 1160px;
   margin: 0 auto;
+
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.menu{
+  padding: 0;
 
   display: flex;
   align-items: center;
 }
 
-.menu{
-  display: flex;
+.menu li:first-child{
+  margin-right: 2rem;
+  font-size: 2rem;
+  font-weight: bold;
+
+  color: #2a8ac2;
 }
 
 .menu li{
   margin-right: 1.5rem;
   list-style: none;
   cursor: pointer;
-}
-
-.menu li:hover{
-  text-decoration: underline;
 }
 
 .search{
@@ -92,6 +104,8 @@ header{
   margin: 1rem;
   cursor: pointer;
   overflow: hidden;
+
+  transition: ease 0.4s;
 }
 
 .anime img{
@@ -99,8 +113,13 @@ header{
   height: 300px;
   border-radius: 4px;
   object-fit: cover;
+  overflow: hidden;
 
   box-shadow: 1px 1px 4px rgba(0, 0, 0, 0.25);
+}
+
+.anime:hover{
+  transform: scale(1.1);
 }
 
 .anime h4{
@@ -241,4 +260,24 @@ header{
   margin-bottom: 0.3rem;
   font-size: 2.5rem;
   cursor: pointer;
+}
+
+.pages{
+  max-width: 1000px;
+  margin: 2rem auto;
+
+  display: flex;
+  justify-content: center;
+}
+
+.pages button{
+  padding: 0.5rem 1rem;
+  margin: 0.5rem;
+  border: none;
+  border-radius: 4px;
+  font-size: 1rem;
+  cursor: pointer;
+
+  color: #EEE;
+  background: #2a8ac2;
 }

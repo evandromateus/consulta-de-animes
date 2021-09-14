@@ -4,9 +4,8 @@
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="stylesheet" href="style.css">
-  <script src="script.js" defer></script>
-  <script src="theme.js" defer></script>
+  <link rel="stylesheet" href="./css/style.css">
+  <script src="./js/theme.js" defer></script>
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css">
   <title>Anime API</title>
 </head>
@@ -17,19 +16,25 @@
   </div>
 
   <header>
-    <form id="search-form">
-      <input id="search" class="search" type="search" placeholder="Procure por um anime" autocomplete="off">
-    </form>
     <ul class="menu">
+      <li id="all-animes">Animes</li>
       <li id="fav-animes">Favoritos</li>
       <li id="watch-later-animes">Ver depois</li>
       <li id="watching-animes">Assistindo</li>
       <li id="watched-animes">Assistido</li>
     </ul>
+    <form id="search-form">
+      <input id="search" class="search" type="search" placeholder="Procure por um anime" autocomplete="off">
+    </form>
   </header>
   
   <div id="animes" class="animes"></div>
 
   <div id="anime-container" class="anime-container dark"></div>
+
+  <div id="pages" class="pages"></div>
+
+  <script src="./js/localstorage.js"></script>
+  <script src="./js/script.js"></script>
 </body>
 </html>
