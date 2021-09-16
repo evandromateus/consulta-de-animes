@@ -91,6 +91,11 @@ header{
   outline: none;
 }
 
+.genres-container{
+  max-width: 1160px;
+  margin: 0.5rem auto;
+}
+
 .animes{
   max-width: 1160px;
   margin: 0 auto;
@@ -280,4 +285,10 @@ header{
 
   color: #EEE;
   background: #2a8ac2;
+}
+
+.pages button.current{
+  font-weight: bold;
+
+  background: #18608a;
 }

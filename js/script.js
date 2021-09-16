@@ -5,9 +5,9 @@ const search = document.querySelector('#search')
 const header = document.querySelector('header')
 const pagesEl = document.querySelector('#pages')
 
-const BASEURL = 'https://api.aniapi.com/v1/anime?per_page=20'
+const BASEURL = 'https://api.aniapi.com/v1/anime?per_page=20&'
 const ANIMEURL = 'https://api.aniapi.com/v1/anime/'
-const SEARCHURL = 'https://api.aniapi.com/v1/anime?title='
+const SEARCHURL = 'https://api.aniapi.com/v1/anime?per_page=20&title='
 
 document.addEventListener('DOMContentLoaded', getAnimes(BASEURL))
 
@@ -15,20 +15,24 @@ async function getAnimes(url) {
   const resp = await fetch(url)
   const respData = await resp.json()
   const animes = respData.data.documents
+  pagination(url, respData.data)
   showAnimes(animes)
 }
 
-switchPages()
+function pagination(url, animesData){
+  const animesCount = animesData.count
+  const animesPage = animesData.last_page
 
-function switchPages(){
-  for (let i=1; i<=10; i++) {
-    const pageBtn = document.createElement('button')
-    pageBtn.innerText = i
-    pageBtn.addEventListener('click', () => {
-      getAnimes(BASEURL + '&page=' + pageBtn.innerText)
-      window.scrollTo(0,0);
-    })
-    pagesEl.appendChild(pageBtn)
+  if (!pagesEl.innerHTML && animesCount > 20) {
+    for (let i=1; i<=animesPage; i++) {
+      const pageBtn = document.createElement('button')
+      pageBtn.innerText = i
+      pageBtn.addEventListener('click', () => {
+        getAnimes(url + '&page=' + pageBtn.innerText)
+        window.scrollTo(0,0)
+      })
+      pagesEl.appendChild(pageBtn)
+    }
   }
 }
 
@@ -178,11 +182,16 @@ document.querySelector('#watched-animes').addEventListener('click', () => getAni
 // Busca de animes
 searchForm.addEventListener('submit', e => {
   e.preventDefault()
+  pagesEl.innerHTML = ''
+  
   const searchTerm = search.value
-
+  
   if (searchTerm) {
-    getAnimes(SEARCHURL + searchTerm)
+    const URL = SEARCHURL + searchTerm
+    getAnimes(URL)
+    pagination(URL)
   } else {
     getAnimes(BASEURL)
   }
+
 })
