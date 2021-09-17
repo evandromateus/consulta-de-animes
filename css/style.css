@@ -267,28 +267,63 @@ header{
   cursor: pointer;
 }
 
-.pages{
-  max-width: 1000px;
-  margin: 2rem auto;
+.pagination{
+  margin: 1rem auto;
 
   display: flex;
   justify-content: center;
 }
 
-.pages button{
-  padding: 0.5rem 1rem;
-  margin: 0.5rem;
-  border: none;
-  border-radius: 4px;
-  font-size: 1rem;
-  cursor: pointer;
+.pagination ul{
+  padding: 0.5rem;
+  border-radius: 50px;
 
-  color: #EEE;
-  background: #2a8ac2;
+  color: #1F1F1F;
+  background: #EEE;
+
+  display: flex;
 }
 
-.pages button.current{
+.pagination ul li{
+  font-size: 1rem;
   font-weight: bold;
+  text-align: center;
+  line-height: 45px;
+  list-style: none;
+  cursor: pointer;
 
-  background: #18608a;
+  transition: all 0.3s ease;
+}
+
+.pagination ul li.numb{
+  width: 45px;
+  height: 45px;
+  margin: 0 3px;
+  border-radius: 50%;
+}
+
+.pagination ul li.dots{
+  font-size: 1.5rem;
+  cursor: default;
+}
+
+.pagination ul li.btn{
+  padding: 0 20px;
+
+  color: #1F1F1F;
+}
+
+.pagination ul li.prev{
+  border-radius: 25px 5px 5px 25px;
+}
+
+.pagination ul li.next{
+  border-radius: 5px 25px 25px 5px;
+}
+
+.pagination ul li.numb.active,
+.pagination ul li.numb:hover,
+.pagination ul li.btn:hover{
+  color: #EEE;
+  background: #2a8ac2;
 }

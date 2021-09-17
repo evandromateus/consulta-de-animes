@@ -3,37 +3,20 @@ const animeContainer = document.querySelector('#anime-container')
 const searchForm = document.querySelector('#search-form')
 const search = document.querySelector('#search')
 const header = document.querySelector('header')
-const pagesEl = document.querySelector('#pages')
 
-const BASEURL = 'https://api.aniapi.com/v1/anime?per_page=20&'
+const BASEURL = 'https://api.aniapi.com/v1/anime?per_page=20'
 const ANIMEURL = 'https://api.aniapi.com/v1/anime/'
 const SEARCHURL = 'https://api.aniapi.com/v1/anime?per_page=20&title='
 
-document.addEventListener('DOMContentLoaded', getAnimes(BASEURL))
+document.addEventListener('DOMContentLoaded', getAnimes(BASEURL, 1))
 
-async function getAnimes(url) {
-  const resp = await fetch(url)
+async function getAnimes(url, page) {
+  const resp = await fetch(url + '&page=' + page)
   const respData = await resp.json()
+  totalPages = respData.data.last_page
   const animes = respData.data.documents
-  pagination(url, respData.data)
+  element(totalPages, page)
   showAnimes(animes)
-}
-
-function pagination(url, animesData){
-  const animesCount = animesData.count
-  const animesPage = animesData.last_page
-
-  if (!pagesEl.innerHTML && animesCount > 20) {
-    for (let i=1; i<=animesPage; i++) {
-      const pageBtn = document.createElement('button')
-      pageBtn.innerText = i
-      pageBtn.addEventListener('click', () => {
-        getAnimes(url + '&page=' + pageBtn.innerText)
-        window.scrollTo(0,0)
-      })
-      pagesEl.appendChild(pageBtn)
-    }
-  }
 }
 
 function showAnimes(animes) {
@@ -172,7 +155,7 @@ function saveAnimes(id) {
 
 
 // Links
-document.querySelector('#all-animes').addEventListener('click', () => getAnimes(BASEURL))
+document.querySelector('#all-animes').addEventListener('click', () => getAnimes(BASEURL, 1))
 document.querySelector('#fav-animes').addEventListener('click', () => getAnimesById('favAnimes'))
 document.querySelector('#watch-later-animes').addEventListener('click', () => getAnimesById('watchLaterAnimes'))
 document.querySelector('#watching-animes').addEventListener('click', () => getAnimesById('watchingAnimes'))
@@ -182,16 +165,80 @@ document.querySelector('#watched-animes').addEventListener('click', () => getAni
 // Busca de animes
 searchForm.addEventListener('submit', e => {
   e.preventDefault()
-  pagesEl.innerHTML = ''
   
   const searchTerm = search.value
   
   if (searchTerm) {
     const URL = SEARCHURL + searchTerm
-    getAnimes(URL)
-    pagination(URL)
+    getAnimes(URL, 1)
   } else {
     getAnimes(BASEURL)
   }
 
 })
+
+
+
+const ulEl = document.querySelector('#pagination ul')
+let totalPages
+
+function element(totalPages, page){
+  let liTag = ''
+  let activeLi
+  let beforePages = page - 1
+  let afterPages = page + 1
+
+  if (page > 1) {
+    liTag += `<li class="btn prev" onclick="element(totalPages, ${page - 1})"><span><i class="bi bi-chevron-left"></i> Prev</span></li>`
+  }
+  if (page > 2) {
+    liTag += `<li class="numb" onclick="element(totalPages, 1)"><span>1</span></li>`
+    if(page > 3 && totalPages > 4) {
+      liTag += ` <li class="dots"><span>...</span></li>`
+    }
+  }
+
+  if (page == totalPages) {
+    beforePages = beforePages - 2
+  } else if (page == totalPages - 1) {
+    beforePages = beforePages - 1
+  }
+
+  if (page === 1 || page === 2 || page - 1 === 0) {
+    beforePages = 0
+  }
+
+  if (page == 1) {
+    afterPages = afterPages + 2
+  } else if (page == 2){
+    afterPages = afterPages + 1
+  }
+
+  for (let pageLength = beforePages; pageLength <= afterPages; pageLength++) {
+    if (pageLength > totalPages) {
+      continue
+    }
+    if (pageLength == 0) {
+      pageLength = pageLength + 1
+    }
+
+    if (page == pageLength) { 
+      activeLi = 'active'
+    } else {
+      activeLi = ''
+    }
+    liTag += `<li class="numb ${activeLi}" onclick="element(totalPages, ${pageLength}); getAnimes(BASEURL, ${pageLength})"><span>${pageLength}</span></li>`
+  }
+
+  if (page < totalPages - 1) {
+    if(page < totalPages - 2 && totalPages > 4) {
+      liTag += ` <li class="dots"><span>...</span></li>`
+    }
+    liTag += `<li class="numb" onclick="element(totalPages, ${totalPages})"><span>${totalPages}</span></li>`
+  }
+  if (page < totalPages) {
+    liTag += `<li class="btn next" onclick="element(totalPages, ${page + 1})">Next <span><i class="bi bi-chevron-right"></i></span></li>`
+  }
+
+  ulEl.innerHTML = liTag
+}
