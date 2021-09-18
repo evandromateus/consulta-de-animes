@@ -7,6 +7,7 @@ const header = document.querySelector('header')
 const BASEURL = 'https://api.aniapi.com/v1/anime?per_page=20'
 const ANIMEURL = 'https://api.aniapi.com/v1/anime/'
 const SEARCHURL = 'https://api.aniapi.com/v1/anime?per_page=20&title='
+let SEARCHTERMURL
 
 document.addEventListener('DOMContentLoaded', getAnimes(BASEURL, 1))
 
@@ -155,7 +156,11 @@ function saveAnimes(id) {
 
 
 // Links
-document.querySelector('#all-animes').addEventListener('click', () => getAnimes(BASEURL, 1))
+document.querySelector('#all-animes').addEventListener('click', () => {
+  search.value = ''
+  SEARCHTERMURL = ''
+  getAnimes(BASEURL, 1)
+})
 document.querySelector('#fav-animes').addEventListener('click', () => getAnimesById('favAnimes'))
 document.querySelector('#watch-later-animes').addEventListener('click', () => getAnimesById('watchLaterAnimes'))
 document.querySelector('#watching-animes').addEventListener('click', () => getAnimesById('watchingAnimes'))
@@ -169,8 +174,8 @@ searchForm.addEventListener('submit', e => {
   const searchTerm = search.value
   
   if (searchTerm) {
-    const URL = SEARCHURL + searchTerm
-    getAnimes(URL, 1)
+    SEARCHTERMURL = SEARCHURL + searchTerm
+    getAnimes(SEARCHTERMURL, 1)
   } else {
     getAnimes(BASEURL)
   }
@@ -181,6 +186,7 @@ searchForm.addEventListener('submit', e => {
 
 const ulEl = document.querySelector('#pagination ul')
 let totalPages
+let url
 
 function element(totalPages, page){
   let liTag = ''
@@ -188,15 +194,27 @@ function element(totalPages, page){
   let beforePages = page - 1
   let afterPages = page + 1
 
-  if (page > 1) {
-    liTag += `<li class="btn prev" onclick="element(totalPages, ${page - 1})"><span><i class="bi bi-chevron-left"></i> Prev</span></li>`
+  if (SEARCHTERMURL) {
+    url = SEARCHTERMURL
+  } else {
+    url = BASEURL
   }
+  
+  // BOTÃO PREV
+  if (page > 1) {
+    liTag += `<li class="btn prev" onclick="element(totalPages, ${page - 1}); getAnimes(url, ${page - 1})"><span><i class="bi bi-chevron-left"></i> Prev</span></li>`
+  }
+
+  // IR PARA A PAGINA 1
   if (page > 2) {
-    liTag += `<li class="numb" onclick="element(totalPages, 1)"><span>1</span></li>`
-    if(page > 3 && totalPages > 4) {
+    if (totalPages > 4) {
+      liTag += `<li class="numb" onclick="element(totalPages, 1); getAnimes(url, 1)"><span>1</span></li>`
+    }
+    if(page > 3 && totalPages > 5) {
       liTag += ` <li class="dots"><span>...</span></li>`
     }
   }
+
 
   if (page == totalPages) {
     beforePages = beforePages - 2
@@ -214,6 +232,7 @@ function element(totalPages, page){
     afterPages = afterPages + 1
   }
 
+
   for (let pageLength = beforePages; pageLength <= afterPages; pageLength++) {
     if (pageLength > totalPages) {
       continue
@@ -227,18 +246,24 @@ function element(totalPages, page){
     } else {
       activeLi = ''
     }
-    liTag += `<li class="numb ${activeLi}" onclick="element(totalPages, ${pageLength}); getAnimes(BASEURL, ${pageLength})"><span>${pageLength}</span></li>`
+    liTag += `<li class="numb ${activeLi}" onclick="element(totalPages, ${pageLength}); getAnimes(url, ${pageLength})"><span>${pageLength}</span></li>`
   }
 
+
   if (page < totalPages - 1) {
-    if(page < totalPages - 2 && totalPages > 4) {
+    if(page < totalPages - 2 && totalPages > 5) {
       liTag += ` <li class="dots"><span>...</span></li>`
     }
-    liTag += `<li class="numb" onclick="element(totalPages, ${totalPages})"><span>${totalPages}</span></li>`
+    if (totalPages > 4) {
+      liTag += `<li class="numb" onclick="element(totalPages, ${totalPages}); getAnimes(url, ${totalPages})"><span>${totalPages}</span></li>`
+    }
   }
+
+  // BOTÃO NEXT
   if (page < totalPages) {
-    liTag += `<li class="btn next" onclick="element(totalPages, ${page + 1})">Next <span><i class="bi bi-chevron-right"></i></span></li>`
+    liTag += `<li class="btn next" onclick="element(totalPages, ${page + 1}); getAnimes(url, ${page + 1})">Next <span><i class="bi bi-chevron-right"></i></span></li>`
   }
 
   ulEl.innerHTML = liTag
+  window.scrollTo(0, 0)
 }
