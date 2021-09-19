@@ -96,6 +96,14 @@ header{
   margin: 0.5rem auto;
 }
 
+.genres-container input{
+  display: none;
+}
+
+.genres-container input:checked + .genre{
+  background: #2a8ac2;
+}
+
 .animes{
   max-width: 1160px;
   margin: 0 auto;

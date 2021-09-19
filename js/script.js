@@ -7,17 +7,28 @@ const header = document.querySelector('header')
 const BASEURL = 'https://api.aniapi.com/v1/anime?per_page=20'
 const ANIMEURL = 'https://api.aniapi.com/v1/anime/'
 const SEARCHURL = 'https://api.aniapi.com/v1/anime?per_page=20&title='
-let SEARCHTERMURL
+let SEARCHOPTIONURL
 
 document.addEventListener('DOMContentLoaded', getAnimes(BASEURL, 1))
 
 async function getAnimes(url, page) {
   const resp = await fetch(url + '&page=' + page)
   const respData = await resp.json()
-  totalPages = respData.data.last_page
-  const animes = respData.data.documents
-  element(totalPages, page)
-  showAnimes(animes)
+  if (respData.status_code == 200) {
+    if (respData.data.count > 20) {
+      ulEl.style.display = 'flex'
+    } else {
+      ulEl.style.display = 'none'
+    }
+
+    totalPages = respData.data.last_page
+    const animes = respData.data.documents
+    element(totalPages, page)
+    showAnimes(animes)
+  } else {
+    animesEl.innerHTML = '<h1>Não foi possível encontrar animes com essas informações</h1>'
+    ulEl.style.display = 'none'
+  }
 }
 
 function showAnimes(animes) {
@@ -65,19 +76,19 @@ function showAnime(anime) {
 
           <div class="tools">
             <button class="tool">
-              <i id="fav" class="bi bi-heart"></i>
+              <i id="fav" class="bi bi-heart${isSaved(id, 'favAnimes')}"></i>
               <span>Favoritar</span>
             </button>
             <button class="tool">
-              <i id="watch-later" class="bi bi-clock"></i>
+              <i id="watch-later" class="bi bi-clock${isSaved(id, 'watchLaterAnimes')}"></i>
               <span>Ver depois</span>
             </button>
             <button class="tool">
-              <i id="watching" class="bi bi-play-circle"></i>
+              <i id="watching" class="bi bi-play-circle${isSaved(id, 'watchingAnimes')}"></i>
               <span>Assistindo</span>
             </button>
             <button class="tool">
-              <i id="watched" class="bi bi-check-circle"></i>
+              <i id="watched" class="bi bi-check-circle${isSaved(id, 'watchedAnimes')}"></i>
               <span>Assistido</span>
             </button>
           </div>
@@ -91,6 +102,14 @@ function showAnime(anime) {
   closeModal()
 
   saveAnimes(id)
+}
+
+function isSaved(id, lsName) {
+  if (isSavedLS(id, lsName)) {
+    return '-fill'
+  } else {
+    return ''
+  }
 }
 
 function closeModal() {
@@ -158,7 +177,7 @@ function saveAnimes(id) {
 // Links
 document.querySelector('#all-animes').addEventListener('click', () => {
   search.value = ''
-  SEARCHTERMURL = ''
+  SEARCHOPTIONURL = ''
   getAnimes(BASEURL, 1)
 })
 document.querySelector('#fav-animes').addEventListener('click', () => getAnimesById('favAnimes'))
@@ -168,17 +187,32 @@ document.querySelector('#watched-animes').addEventListener('click', () => getAni
 
 
 // Busca de animes
+let genres
+
 searchForm.addEventListener('submit', e => {
   e.preventDefault()
+
+  genres = ''
   
   const searchTerm = search.value
-  
+
+  genresEl = document.querySelectorAll('.genres-container input')
+
+  genresEl.forEach(genreInput => {
+    if (genreInput.checked) {
+      genres += `${genreInput.value},`
+    }
+  })
+
   if (searchTerm) {
-    SEARCHTERMURL = SEARCHURL + searchTerm
-    getAnimes(SEARCHTERMURL, 1)
-  } else {
-    getAnimes(BASEURL)
+    SEARCHOPTIONURL = BASEURL + '&title=' + searchTerm
   }
+
+  if (genres) {
+    SEARCHOPTIONURL += '&genres=' + genres
+  }
+
+  getAnimes(SEARCHOPTIONURL, 1)
 
 })
 
@@ -194,8 +228,8 @@ function element(totalPages, page){
   let beforePages = page - 1
   let afterPages = page + 1
 
-  if (SEARCHTERMURL) {
-    url = SEARCHTERMURL
+  if (SEARCHOPTIONURL) {
+    url = SEARCHOPTIONURL
   } else {
     url = BASEURL
   }

@@ -20,10 +20,24 @@ function getAnimesById(lsName) {
   const ids = getAnimeIdsLS(lsName)
   let animes = []
 
-  ids.forEach(async id => {
-    const resp = await fetch(ANIMEURL + id)
-    const respData = await resp.json()
-    animes.push(respData.data)
-    showAnimes(animes)
-  })
+  if (ids.length) {
+    ids.forEach(async id => {
+      const resp = await fetch(ANIMEURL + id)
+      const respData = await resp.json()
+      animes.push(respData.data)
+      showAnimes(animes)
+    })
+  }
+
+}
+
+function isSavedLS(id, lsName) {
+  const savedIds = getAnimeIdsLS(lsName)
+  const idSaved = savedIds.filter(savedId => savedId == id)
+
+  if (idSaved.length) {
+    return true
+  } else {
+    return false
+  }
 }
