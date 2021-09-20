@@ -12,6 +12,12 @@ html {
   scroll-behavior: smooth;
 }
 
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
 body{
   margin: 0;
   font-family: 'Poppins', sans-serif;
@@ -26,28 +32,18 @@ body.dark{
   background: #1F1F1F;
 }
 
-.toggle-container{
-  position: fixed;
-  top: 20px;
-  right: 20px;
-  z-index: 100;
-}
-
-.toggle-container input{
-  display: none;
-}
 
 label{
   font-size: 1.5rem;
   cursor: pointer;
-
+  
   user-select: none;
 }
 
 header{
-  max-width: 1160px;
+  max-width: 1170px;
   margin: 0 auto;
-
+  
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -55,7 +51,7 @@ header{
 
 .menu{
   padding: 0;
-
+  
   display: flex;
   align-items: center;
 }
@@ -64,7 +60,7 @@ header{
   margin-right: 2rem;
   font-size: 2rem;
   font-weight: bold;
-
+  
   color: #2a8ac2;
 }
 
@@ -74,26 +70,60 @@ header{
   cursor: pointer;
 }
 
-.search{
-  width: 300px;
-  padding: 0.8rem 1rem;
-  margin: 1rem 0;
+.toggle-container input{
+  display: none;
+}
+
+.search-container{
+  max-width: 1170px;
+  margin: 0 auto;
+  
+}
+
+.search-container form{
+  
+  display: flex;
+  align-items: center;
+}
+
+.search, .year-search{
+  margin-right: 0.5rem;
   border: none;
   border-radius: 5px;
   font-family: inherit;
-
+  font-size: 0.8rem;
+  outline: none;
+  
+  color: #EEE;
+  background: #333;
   box-shadow: 1px 1px 4px rgba(0, 0, 0, 0.25);
-
+  
   display: block;
 }
 
-.search:focus{
-  outline: none;
+.search{
+  width: 240px;
+  padding: 0.4rem 1rem;
+}
+
+.search::placeholder{
+  color: #EEE;
+}
+
+.year-search{
+  width: 50px;
+  padding: 0.4rem 0.6rem;
 }
 
 .genres-container{
-  max-width: 1160px;
-  margin: 0.5rem auto;
+  display: flex;
+}
+
+.genres-container .genre{
+
+  background: #333;
+  box-shadow: 1px 1px 4px rgba(0, 0, 0, 0.25);
+  transition: background 0.3s ease-in-out;
 }
 
 .genres-container input{

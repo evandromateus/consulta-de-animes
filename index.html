@@ -11,10 +11,7 @@
 </head>
 <body class="dark">
 
-  <div class="toggle-container">
-    <input id="toggle" type="checkbox" name="toggle"><label id="label-toggle" for="toggle"><i class="bi bi-moon-stars"></i></label>
-  </div>
-
+  
   <header>
     <ul class="menu">
       <li id="all-animes">Animes</li>
@@ -23,47 +20,18 @@
       <li id="watching-animes">Assistindo</li>
       <li id="watched-animes">Assistido</li>
     </ul>
+
+    <div class="toggle-container">
+      <input id="toggle" type="checkbox" name="toggle"><label id="label-toggle" for="toggle"><i class="bi bi-moon-stars"></i></label>
+    </div>
+  </header>
+  
+  <div class="search-container">
     <form id="search-form">
       <input id="search" class="search" type="search" placeholder="Procure por um anime" autocomplete="off">
+      <input id="year-search" class="year-search" type="number" max="2023" placeholder="2021">
+      <div id="genres-container" class="genres-container"></div>
     </form>
-  </header>
-
-  <div class="genres-container">
-    <input id="action" type="checkbox" value="Action">
-    <label for="action" class="genre">action</label>
-
-    <input id="adventure" type="checkbox" value="Adventure">
-    <label for="adventure" class="genre">adventure</label>
-
-    <input id="comedy" type="checkbox" value="Comedy">
-    <label for="comedy" class="genre">comedy</label>
-
-    <input id="drama" type="checkbox" value="Drama">
-    <label for="drama" class="genre">drama</label>
-
-    <!-- <input id="action" type="checkbox" value="Action">
-    <label class="genre">slice of life</label>
-    
-    <input id="action" type="checkbox" value="Action">
-    <label class="genre">fantasy</label>
-
-    <input id="action" type="checkbox" value="Action">
-    <label class="genre">magic</label>
-
-    <input id="action" type="checkbox" value="Action">
-    <label class="genre">supernatural</label>
-
-    <input id="action" type="checkbox" value="Action">
-    <label class="genre">horror</label>
-
-    <input id="action" type="checkbox" value="Action">
-    <label class="genre">mistery</label>
-
-    <input id="action" type="checkbox" value="Action">
-    <label class="genre">psychological</label>
-
-    <input id="action" type="checkbox" value="Action">
-    <label class="genre">romance</label> -->
   </div>
   
   <div id="animes" class="animes"></div>

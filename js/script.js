@@ -189,6 +189,37 @@ document.querySelector('#watched-animes').addEventListener('click', () => getAni
 // Busca de animes
 let genres
 
+const genresContainer = document.querySelector('#genres-container')
+const genresArr = [
+  'action',
+  'adventure',
+  'comedy',
+  'drama',
+  'fantasy',
+  'horror',
+  'magic',
+  'mistery',
+  'psychological',
+  'romance',
+  'slice of life',
+  'supernatural'
+]
+
+genresArr.forEach(genre => {
+  const checkbox = document.createElement('input')
+  checkbox.type = 'checkbox'
+  checkbox.id = genre
+  checkbox.value = genre[0].toUpperCase() + genre.substring(1)
+
+  const label = document.createElement('label')
+  label.htmlFor = genre
+  label.classList.add('genre')
+  label.innerText = genre
+
+  genresContainer.appendChild(checkbox)
+  genresContainer.appendChild(label)
+})
+
 searchForm.addEventListener('submit', e => {
   e.preventDefault()
 
@@ -212,6 +243,7 @@ searchForm.addEventListener('submit', e => {
     SEARCHOPTIONURL += '&genres=' + genres
   }
 
+  console.log(SEARCHOPTIONURL)
   getAnimes(SEARCHOPTIONURL, 1)
 
 })
