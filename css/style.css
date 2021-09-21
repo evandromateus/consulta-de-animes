@@ -32,14 +32,6 @@ body.dark{
   background: #1F1F1F;
 }
 
-
-label{
-  font-size: 1.5rem;
-  cursor: pointer;
-  
-  user-select: none;
-}
-
 header{
   max-width: 1170px;
   margin: 0 auto;
@@ -57,7 +49,7 @@ header{
 }
 
 .menu li:first-child{
-  margin-right: 2rem;
+  margin-right: 3rem;
   font-size: 2rem;
   font-weight: bold;
   
@@ -70,14 +62,43 @@ header{
   cursor: pointer;
 }
 
+.header-btns{
+  display: flex;
+}
+
 .toggle-container input{
   display: none;
+}
+
+.rounded-btn{
+  width: 30px;
+  height: 30px;
+  margin-left: 1rem;
+  border-radius: 50%;
+  cursor: pointer;
+  user-select: none;
+
+  background: #333;
+  box-shadow: 1px 1px 4px rgba(0, 0, 0, 0.25);
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.rounded-btn i{
+  font-size: 1rem;
 }
 
 .search-container{
   max-width: 1170px;
   margin: 0 auto;
   
+  display: none;
+}
+
+.search-container.active{
+  display: block;
 }
 
 .search-container form{
@@ -102,7 +123,7 @@ header{
 }
 
 .search{
-  width: 240px;
+  width: 220px;
   padding: 0.4rem 1rem;
 }
 

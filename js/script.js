@@ -46,6 +46,7 @@ function showAnimes(animes) {
       animeContainer.classList.add('active')
       showAnime(anime)
     })
+    
     animesEl.appendChild(animeEl)
   })
 }
@@ -188,6 +189,12 @@ document.querySelector('#watched-animes').addEventListener('click', () => getAni
 
 // Busca de animes
 let genres
+const searchBtn = document.querySelector('#search-btn')
+const searchContainer = document.querySelector('#search-container')
+
+searchBtn.addEventListener('click', () => {
+  searchContainer.classList.toggle('active')
+})
 
 const genresContainer = document.querySelector('#genres-container')
 const genresArr = [

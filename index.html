@@ -21,12 +21,18 @@
       <li id="watched-animes">Assistido</li>
     </ul>
 
-    <div class="toggle-container">
-      <input id="toggle" type="checkbox" name="toggle"><label id="label-toggle" for="toggle"><i class="bi bi-moon-stars"></i></label>
+    <div class="header-btns">
+      <div id="search-btn" class="rounded-btn">
+        <i class="bi bi-search"></i>
+      </div>
+
+      <div class="toggle-container">
+        <input id="toggle" type="checkbox" name="toggle"><label id="label-toggle" class="rounded-btn" for="toggle"><i class="bi bi-moon-stars"></i></label>
+      </div>
     </div>
   </header>
   
-  <div class="search-container">
+  <div id="search-container" class="search-container">
     <form id="search-form">
       <input id="search" class="search" type="search" placeholder="Procure por um anime" autocomplete="off">
       <input id="year-search" class="year-search" type="number" max="2023" placeholder="2021">
@@ -34,7 +40,8 @@
     </form>
   </div>
   
-  <div id="animes" class="animes"></div>
+  <div id="animes" class="animes">
+  </div>
 
   <div id="anime-container" class="anime-container dark"></div>
 
