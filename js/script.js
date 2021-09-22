@@ -246,13 +246,23 @@ searchForm.addEventListener('submit', e => {
     SEARCHOPTIONURL = BASEURL + '&title=' + searchTerm
   }
 
-  if (genres) {
+  if (genres && searchTerm) {
     SEARCHOPTIONURL += '&genres=' + genres
   }
 
-  console.log(SEARCHOPTIONURL)
-  getAnimes(SEARCHOPTIONURL, 1)
+  if (genres && !searchTerm) {
+    SEARCHOPTIONURL = BASEURL + '&genres=' + genres
+  }
 
+  console.log(SEARCHOPTIONURL)
+
+  if (SEARCHOPTIONURL) {
+    getAnimes(SEARCHOPTIONURL, 1)
+  } else {
+    getAnimes(BASEURL, 1)
+  }
+
+  SEARCHOPTIONURL = ''
 })
 
 
