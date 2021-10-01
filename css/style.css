@@ -7,6 +7,13 @@
   --text1: #333;
   --text2: #4F4F4F;
   --shadow: 1px 1px 2px rgba(0, 0, 0, 0.25);
+
+  --accent-dark: #2a8ac2;
+  --bg1-dark: #191919;
+  --bg2-dark: #333;
+  --text1-dark: #FFF;
+  --text2-dark: #F2F2F2;
+  --shadow-dark: 1px 1px 2px rgba(0, 0, 0, 0.25);
 }
 
 *{
@@ -30,6 +37,11 @@ body{
   color: var(--text1);
   background: var(--bg1);
   transition: ease .5s;
+}
+
+body.dark{
+  color: var(--text1-dark);
+  background: var(--bg1-dark);
 }
 
 header{
@@ -91,6 +103,12 @@ header{
   font-size: 1rem;
 }
 
+body.dark .rounded-btn{
+  color: var(--text2-dark);
+  background: var(--bg2-dark);
+  transition: ease .5s;
+}
+
 .search-container{
   max-width: 1170px;
   margin: 0 auto 1rem;
@@ -122,6 +140,11 @@ header{
   display: block;
 }
 
+body.dark .search{
+  color: var(--text1-dark);
+  background: var(--bg2-dark);
+}
+
 .search{
   width: 220px;
   padding: 0.4rem 1rem;
@@ -129,6 +152,10 @@ header{
 
 .search::placeholder{
   color: var(--text2);
+}
+
+body.dark .search::placeholder{
+  color: var(--text2-dark);
 }
 
 .year-search{
@@ -147,6 +174,11 @@ header{
   background: var(--bg2);
   box-shadow: var(--shadow);
   transition: background 0.3s ease-in-out;
+}
+
+body.dark .genres-container .genre{
+  color: var(--text1-dark);
+  background: var(--bg2-dark);
 }
 
 .genres-container input{
@@ -240,10 +272,10 @@ header{
   transition: ease .5s;
 }
 
-/* .anime-container.dark .anime-modal{
-  color: var(--bg1);
-  background: #1F1F1F;
-} */
+.anime-container.dark .anime-modal{
+  color: var(--text2-dark);
+  background: var(--bg2-dark);
+}
 
 .close-modal{
   border: none;
